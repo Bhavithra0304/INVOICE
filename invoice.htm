@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice Generator</title>
+    <style>
+       #brand{
+        background-color: black;
+        color: beige;
+       padding: 40px;
+       }
+       #invoiceOutput{
+        text-align: left;
+       }
+       
+    </style>
+</head>
+<body>
+       
+        <h1 id="brand"><u>STYLE - CLOTHING BRAND</u></h1>
+    <h2>Invoice Generator</h2>
+    <form id="invoiceForm">
+      
+        <h3>Customer Details</h3>
+        <table>  
+        <tr>
+        <th><label for="customerName">Name:</label></th>
+        <td><input type="text" id="customerName" name="customerName" required><br><br></td>
+        
+        <th><label for="address">Address:</label></th>
+        <td><input type="text" id="address" name="address" required><br><br></td>
+        </tr>
+        <tr>
+        <th><label for="address">Phone:</label></th>
+        <td><input type="text" id="address" name="address" required><br><br></td>
+
+        <th><label for="address">Company:</label></th>
+        <td><input type="text" id="address" name="address" required><br><br></td>
+        </tr>
+        </table>
+        <b><hr><b>
+        
+        <h3>Item Details</h3>
+        <table>
+        <tr>
+          <th><label for="itemDescription">Item Description:</label></th>
+        <td><input type="text" id="itemDescription" name="itemDescription" required><br><br></td>
+
+        <th><label for="quantity">Quantity:</label></th>
+        <td><input type="number" id="quantity" name="quantity" required><br><br></td>
+        </tr>
+
+        <tr>
+        <th><label for="pricePerUnit">Price per Unit:</label></th>
+        <td><input type="number" id="pricePerUnit" name="pricePerUnit" required><br><br></td>
+
+        <th><label for="taxRate">Tax Rate (%):</label></th>
+        <td><input type="number" id="taxRate" name="taxRate" value="10" required><br><br></td><br>
+        </tr>
+        </table>
+        <hr>
+        <table>
+        <tr>
+            <th><input type="button" value="Generate Invoice" onclick="generateInvoice()"></th>
+            <td><button type="button">Reset</button></td>
+            <td><button type="button">Print</button></td>
+        </tr>
+        </table>
+    </form>
+  </body>
+    
+
+    <div id="invoiceOutput">
+        <!-- The generated invoice will be displayed here -->
+    </div>
+    <div>
+    <script>
+      
+        function generateInvoice() {
+            // Get form data
+            var customerName = document.getElementById('customerName').value;
+            var address = document.getElementById('address').value;
+            var itemDescription = document.getElementById('itemDescription').value;
+            var quantity = parseInt(document.getElementById('quantity').value);
+            var pricePerUnit = parseFloat(document.getElementById('pricePerUnit').value);
+            var taxRate = parseFloat(document.getElementById('taxRate').value);
+
+            // Calculate totals
+            var totalPrice = quantity * pricePerUnit;
+            var subtotal = totalPrice;
+            var tax = (subtotal * taxRate) / 100;
+            var totalAmount = subtotal + tax;
+
+            var invoiceOutput = `
+                <h2>Invoice</h2>
+                <p><strong>Customer Details:</strong></p>
+                <p>Name: ${customerName}</p>
+                <p>Address: ${address}</p>
+                <p><strong>Item Details:</strong></p>
+                
+                <table border="1">
+                    <tr>
+                        <th>Item Description</th>
+                        <th>Quantity</th>
+                        <th>Price per Unit</th>
+                        <th>Total Price</th>
+                    </tr>
+                    <tr>
+                        <td>${itemDescription}</td>
+                        <td>${quantity}</td>
+                        <td>$${pricePerUnit.toFixed(2)}</td>
+                        <td>$${totalPrice.toFixed(2)}</td>
+                    </tr>
+                </table>
+                
+                <p>Subtotal: $${subtotal.toFixed(2)}</p>
+                <p>Tax (${taxRate}%): $${tax.toFixed(2)}</p>
+                <p><strong>Total Amount Due: $${totalAmount.toFixed(2)}</strong></p>
+            `
+            document.getElementById('invoiceOutput').innerHTML = invoiceOutput;
+        }
+    </script>
+    </div>
+</body>
+</html>
